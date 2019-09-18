@@ -11,7 +11,7 @@ import java.util.Date;
  *
  * @author cristian
  */
-public class Contato {
+public  class  Contato {
     private String nome;
     private String email;
     private String tel;

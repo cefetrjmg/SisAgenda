@@ -14,4 +14,5 @@ public class Settings {
     public static String msg="";
     //Variável define se o sistema gerou um erro ou não, quando está falso o sistema gerou algum errou
     public static boolean status;
-}
+    public static final String MSG_DELETE="Deseja realamente excluir?";
+ }
