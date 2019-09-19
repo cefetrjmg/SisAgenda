@@ -27,6 +27,7 @@ public class NewMain1 {
         if (!f.exists()) {
             if (f.createNewFile()) {
                 System.out.println("Arquivo criado em " + f.getAbsolutePath());
+                  System.out.println(f.setReadable(true));
             }
         }
         FileWriter fw = new FileWriter(f);
@@ -45,6 +46,9 @@ public class NewMain1 {
         while (br.ready()) {
             System.out.println(br.readLine());
         }
+        System.out.println(f.canRead());
+        System.out.println(f.setReadable(false));
+        System.out.println(f.canRead());
 
     }
 

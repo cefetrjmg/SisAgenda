@@ -5,13 +5,14 @@
  */
 package br.cefetrj.mg.bsi.agenda.model;
 
+import java.util.Comparator;
 import java.util.Date;
 
 /**
  *
  * @author cristian
  */
-public class Contato {
+public class Contato implements Comparable<Contato>{
 
     private int id;
     private String nome;
@@ -72,6 +73,15 @@ public class Contato {
     public void setDataNasc(Date dataNasc) {
         this.dataNasc = dataNasc;
     }
+
+    @Override
+    public int compareTo(Contato o) {
+        return this.nome.compareToIgnoreCase(o.getNome());
+    }
+
+    
+
+  
 
    
 

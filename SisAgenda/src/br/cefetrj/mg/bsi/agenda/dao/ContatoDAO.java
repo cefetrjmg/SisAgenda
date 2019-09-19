@@ -18,6 +18,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,7 +33,6 @@ public class ContatoDAO implements DAO {
     private String tipoContato = "";
     private static int id = 1;
 
-    
     public String getTipoContato(Contato c) {
         if (c instanceof Cliente) {
             tipoContato = "Cliente";
@@ -50,11 +50,16 @@ public class ContatoDAO implements DAO {
             c = (Contato) o;
             if (c.isAUTO_INCREMENT()) {
                 c.setId(id);
-                if (CONTATOS.add(c) && gravarArquivo()) {
-                    //Seta true para que possa que se informa que o sistema está ok.
-                    Settings.status = true;
-                    Settings.msg = getTipoContato(c) + " inserido com sucesso.";
-                    id++;
+
+                if (CONTATOS.add(c)) {
+                    Collections.sort(CONTATOS);
+                    if (gravarArquivo()) {
+
+                        //Seta true para que possa que se informa que o sistema está ok.
+                        Settings.status = true;
+                        Settings.msg = getTipoContato(c) + " inserido com sucesso.";
+                        id++;
+                    }
 
                 } else {
                     Settings.msg = "Erro ao inserir " + getTipoContato(c);
@@ -183,7 +188,7 @@ public class ContatoDAO implements DAO {
                 String tipo = getTipoContato(contato);
                 bw.write(tipo + ";");
                 bw.write(contato.getNome() + ";");
-                bw.write(contato.getTel()+";");
+                bw.write(contato.getTel() + ";");
                 bw.write(contato.getEmail() + ";");
                 bw.write(contato.getEnd() + ";");
                 bw.write(Utils.dateToText(contato.getDataNasc()) + ";");
@@ -223,21 +228,20 @@ public class ContatoDAO implements DAO {
         try {
             if (Settings.ARQUIVO.exists()) {
                 bf = new BufferedReader(new FileReader(Settings.ARQUIVO));
-                while(bf.ready()){
-                    Contato contato=new Contato();
-                    String linha []=bf.readLine().split(";");
-                    if(linha[1].equalsIgnoreCase("cliente")){
-                        contato =new Cliente();
-                        Cliente cliente=(Cliente) contato;
+                while (bf.ready()) {
+                    Contato contato = new Contato();
+                    String linha[] = bf.readLine().split(";");
+                    if (linha[1].equalsIgnoreCase("cliente")) {
+                        contato = new Cliente();
+                        Cliente cliente = (Cliente) contato;
                         cliente.setTipoFidelidade(linha[7]);
                         cliente.setDataUltimaCompra(Utils.textToDate(linha[8]));
-                        contato=cliente;
-                    }
-                    else if(linha[1].equalsIgnoreCase("fornecedor")){
-                        contato=new Fornecedor();
-                        Fornecedor f=(Fornecedor) contato;
+                        contato = cliente;
+                    } else if (linha[1].equalsIgnoreCase("fornecedor")) {
+                        contato = new Fornecedor();
+                        Fornecedor f = (Fornecedor) contato;
                         f.setIndiceQuali(Integer.parseInt(linha[7]));
-                        contato=f;
+                        contato = f;
                     }
                     contato.setId(Integer.parseInt(linha[0]));
                     contato.setNome(linha[2]);
@@ -247,8 +251,7 @@ public class ContatoDAO implements DAO {
                     contato.setDataNasc(Utils.textToDate(linha[6]));
                     CONTATOS.add(contato);
                 }
-                
-                
+
             }
 
         } catch (FileNotFoundException ex) {
