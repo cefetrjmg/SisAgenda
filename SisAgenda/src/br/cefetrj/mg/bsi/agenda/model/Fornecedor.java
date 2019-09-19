@@ -28,5 +28,7 @@ public class Fornecedor extends Contato{
     public void setClassificacao(String classificacao) {
         this.classificacao = classificacao;
     }
+
+   
     
 }

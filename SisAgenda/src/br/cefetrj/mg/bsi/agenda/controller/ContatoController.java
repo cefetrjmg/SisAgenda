@@ -41,6 +41,7 @@ public class ContatoController implements Controller {
 
     public ContatoController(FormContato form) {
         this.form = form;
+        this.carregarArquivo();
 
     }
 
@@ -60,6 +61,7 @@ public class ContatoController implements Controller {
                 case 2:
                     f = new Fornecedor();
                     f.setIndiceQuali((int) form.getjSpnIndice().getValue());
+                    
                     c = f;
                     break;
 
@@ -186,8 +188,12 @@ public class ContatoController implements Controller {
         renderizar(getDao().getContatosByNomeOrEmail(c));
 
     }
+    private boolean carregarArquivo(){
+        return getDao().carregarArquivo();
+    }
 
     private void renderizar(ArrayList<Contato> contatos) {
+        
         model = new TableModel(getDao(), contatos);
         form.getjTblContatos().setModel(model);
     }

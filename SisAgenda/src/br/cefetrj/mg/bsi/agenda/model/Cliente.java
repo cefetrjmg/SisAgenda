@@ -30,6 +30,8 @@ public class Cliente extends Contato{
     public void setTipoFidelidade(String tipoFidelidade) {
         this.tipoFidelidade = tipoFidelidade;
     }
+
+  
     
 
     

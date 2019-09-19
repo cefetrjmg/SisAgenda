@@ -463,11 +463,13 @@ public class FormContato extends javax.swing.JFrame {
 
     private void jBtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExcluirActionPerformed
         // TODO add your handling code here:
-        if (Utils.confirm(Settings.MSG_DELETE, Settings.TITLE) == JOptionPane.YES_OPTION) {
+        int resp =Utils.confirm(Settings.MSG_DELETE, Settings.TITLE);
+        if (resp == JOptionPane.YES_OPTION) {
             controller.excluir();
             limpar();
         }
-        Utils.print(Settings.msg, Settings.TITLE, Settings.status);
+        else if(resp != JOptionPane.NO_OPTION)
+            Utils.print(Settings.msg, Settings.TITLE, Settings.status);
     }//GEN-LAST:event_jBtnExcluirActionPerformed
 
     private void jTxtPesquisarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtPesquisarKeyReleased
