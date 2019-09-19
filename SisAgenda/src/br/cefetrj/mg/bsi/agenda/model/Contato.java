@@ -11,12 +11,27 @@ import java.util.Date;
  *
  * @author cristian
  */
-public  class  Contato {
+public class Contato {
+
+    private int id;
     private String nome;
     private String email;
     private String tel;
     private String end;
     private Date dataNasc;
+    private final boolean AUTO_INCREMENT=true;
+
+    public boolean isAUTO_INCREMENT() {
+        return AUTO_INCREMENT;
+    }
+    
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getNome() {
         return nome;
@@ -57,5 +72,5 @@ public  class  Contato {
     public void setDataNasc(Date dataNasc) {
         this.dataNasc = dataNasc;
     }
-    
+
 }

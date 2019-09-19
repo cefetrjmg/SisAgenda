@@ -20,8 +20,9 @@ public class ContatoDAO implements DAO {
     private Contato c = null;
     private static final ArrayList<Contato> CONTATOS = new ArrayList<>();
     private String tipoContato = "";
+    private static int id = 1;
 
-    public String getTipoContato() {
+    public String getTipoContato(Contato c) {
         if (c instanceof Cliente) {
             tipoContato = "Cliente";
         } else if (c instanceof Fornecedor) {
@@ -36,14 +37,18 @@ public class ContatoDAO implements DAO {
     public boolean inserir(Object o) {
         try {
             c = (Contato) o;
-            if (CONTATOS.add(c)) {
-                //Seta true para que possa que se informa que o sistema está ok.
-                Settings.status = true;
-                Settings.msg = getTipoContato() + " inserido com sucesso.";
+            if (c.isAUTO_INCREMENT()) {
+                c.setId(id);
+                if (CONTATOS.add(c)) {
+                    //Seta true para que possa que se informa que o sistema está ok.
+                    Settings.status = true;
+                    Settings.msg = getTipoContato(c) + " inserido com sucesso.";
+                    id++;
 
-            } else {
-                Settings.msg = "Erro ao inserir " + getTipoContato();
-                Settings.status = false;
+                } else {
+                    Settings.msg = "Erro ao inserir " + getTipoContato(c);
+                    Settings.status = false;
+                }
             }
         } catch (Exception e) {
             Settings.status = false;
@@ -53,22 +58,27 @@ public class ContatoDAO implements DAO {
     }
 
     @Override
-    public boolean atualizar(Object oldObject, Object newObject) {
-        c = (Contato) newObject;
-        int pos = getPos(oldObject);
+    public boolean atualizar(Object newObject, int id) {
+        int pos=-1;
+        Contato oldContato=getContatoById(id);
+        this.c=(Contato) newObject;
+        if (newObject != null) {
+            pos=getPos(oldContato);
+        }
+
         try {
             if (pos != -1 && c != null) {
                 CONTATOS.set(pos, c);
                 Settings.status = true;
-                Settings.msg = getTipoContato() + " atualizado com sucesso.";
+                Settings.msg = getTipoContato(c) + " atualizado com sucesso.";
 
             } else {
                 Settings.status = false;
-                Settings.msg = getTipoContato() + " não encontrado.";
+                Settings.msg = getTipoContato(c) + " não encontrado.";
             }
         } catch (Exception e) {
             Settings.status = false;
-            Settings.msg = " Erro ao atualizar " + getTipoContato() + ":" + e.getMessage();
+            Settings.msg = " Erro ao atualizar " + getTipoContato(c) + ":" + e.getMessage();
 
         }
         return Settings.status;
@@ -78,12 +88,12 @@ public class ContatoDAO implements DAO {
     public boolean excluir(Object o) {
         if (o != null) {
             c = (Contato) o;
-            c=(Contato) buscar(o);
+            c = (Contato) buscar(o);
             if (CONTATOS.remove(c)) {
-                Settings.msg = getTipoContato() + " removido com sucesso.";
+                Settings.msg = getTipoContato(c) + " removido com sucesso.";
                 Settings.status = true;
             } else {
-                Settings.msg = "Erro ao excluir " + getTipoContato();
+                Settings.msg = "Erro ao excluir " + getTipoContato(c);
                 Settings.status = false;
             }
 
@@ -107,6 +117,18 @@ public class ContatoDAO implements DAO {
         Settings.msg = "E-mail não cadastrado";
         return null;
     }
+    public ArrayList<Contato> getContatosByNomeOrEmail(Object o){
+        Contato c=(Contato) o;
+        ArrayList<Contato> contatosByNomeOrEmail=new ArrayList<>();
+        for(Contato contato : CONTATOS){
+            if(contato.getNome().contains(c.getNome()) 
+                    || contato.getEmail().contains(c.getEmail()))
+                contatosByNomeOrEmail.add(contato);
+                 
+        }
+        return contatosByNomeOrEmail;
+        
+    }
 
     @Override
     public ArrayList<Object> listar() {
@@ -118,7 +140,16 @@ public class ContatoDAO implements DAO {
     }
 
     private int getPos(Object o) {
-       return CONTATOS.indexOf(o);
+        return CONTATOS.indexOf(o);
+    }
+
+    private Contato getContatoById(int id) {
+        for (Contato contato : CONTATOS) {
+            if (contato.getId() == id) {
+                return contato;
+            }
+        }
+        return null;
     }
 
 }

@@ -10,9 +10,12 @@ import br.cefetrj.mg.bsi.agenda.dao.ContatoDAO;
 import br.cefetrj.mg.bsi.agenda.model.Cliente;
 import br.cefetrj.mg.bsi.agenda.model.Contato;
 import br.cefetrj.mg.bsi.agenda.model.Fornecedor;
+import br.cefetrj.mg.bsi.agenda.model.TableModel;
 import br.cefetrj.mg.bsi.agenda.view.FormContato;
 import br.cefetrj.mg.bsi.utils.Utils;
 import java.text.ParseException;
+import java.util.ArrayList;
+import javax.swing.JTable;
 
 /**
  *
@@ -26,16 +29,19 @@ public class ContatoController implements Controller {
     private Fornecedor f = null;
     private static ContatoDAO dao;
     private String msg = "";
-
-    public void setForm(FormContato form) {
-        this.form = form;
-    }
+    private JTable table;
+    private TableModel model;
 
     public static ContatoDAO getDao() {
         if (dao == null) {
             dao = new ContatoDAO();
         }
         return dao;
+    }
+
+    public ContatoController(FormContato form) {
+        this.form = form;
+
     }
 
     @Override
@@ -65,6 +71,8 @@ public class ContatoController implements Controller {
             c.setDataNasc(Utils.textToDate(form.getjTxtDataNasc().getText()));
 
             getDao().inserir(c);
+            renderizar(getDao().getContatos());
+            form.getjTpnContato().setSelectedIndex(1);
         } catch (ParseException ex) {
             Settings.status = false;
             Settings.msg = ex.getMessage();
@@ -74,7 +82,7 @@ public class ContatoController implements Controller {
 
     @Override
     public boolean atualizar() {
-        Contato oldContato = this.c;
+
         try {
             switch (form.getjCboTipo().getSelectedIndex()) {
                 case 0:
@@ -92,13 +100,16 @@ public class ContatoController implements Controller {
                     c = f;
                     break;
             }
+
             c.setEmail(form.getjTxtEmail().getText());
             c.setEnd(form.getjTxtEnd().getText());
             c.setNome(form.getjTxtNome().getText());
             c.setTel(form.getjTxtTel().getText());
             c.setDataNasc(Utils.textToDate(form.getjTxtDataNasc().getText()));
-
-            getDao().atualizar(oldContato, c);
+            c.setId(Integer.parseInt(form.getjTxtId().getText()));
+            getDao().atualizar(c, c.getId());
+            renderizar(getDao().getContatos());
+            form.getjTpnContato().setSelectedIndex(1);
         } catch (ParseException ex) {
             Settings.status = false;
             Settings.msg = ex.getMessage();
@@ -112,10 +123,12 @@ public class ContatoController implements Controller {
             c = new Contato();
             c.setEmail(form.getjTxtEmail().getText());
             getDao().excluir(c);
+            form.getjTpnContato().setSelectedIndex(1);
         } else {
             Settings.msg = "Por favor, Preencha pelo o menos o email para realizar a exclusão.";
             Settings.status = false;
         }
+        renderizar(getDao().getContatos());
         return Settings.status;
 
     }
@@ -131,6 +144,7 @@ public class ContatoController implements Controller {
             form.getjTxtEnd().setText(c.getEnd());
             form.getjTxtTel().setText(c.getTel());
             form.getjCboTipo().setSelectedIndex(0);
+            form.getjTxtId().setText(String.valueOf(c.getId()));
             if (c instanceof Cliente) {
                 cli = (Cliente) c;
                 form.getjCboTipo().setSelectedIndex(1);
@@ -149,9 +163,33 @@ public class ContatoController implements Controller {
         return Settings.status;
     }
 
+    public void buscarNaBarraDePesquisa(int rowIndex) {
+        form.getjTxtEmail().setText(model.getValueAt(rowIndex, 1).toString());
+        buscar();
+        form.getjTpnContato().setSelectedIndex(0);
+    }
+
     @Override
     public boolean listar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        renderizar(getDao().getContatos());
+        return Settings.status;
+    }
+
+    public ArrayList<Contato> getContatos() {
+        return getDao().getContatos();
+    }
+
+    public void getContatosByNomeOrEmail() {
+        c = new Contato();
+        c.setNome(form.getjTxtPesquisar().getText());
+        c.setEmail(form.getjTxtPesquisar().getText());
+        renderizar(getDao().getContatosByNomeOrEmail(c));
+
+    }
+
+    private void renderizar(ArrayList<Contato> contatos) {
+        model = new TableModel(getDao(), contatos);
+        form.getjTblContatos().setModel(model);
     }
 
 }

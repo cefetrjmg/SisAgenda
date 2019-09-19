@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public interface DAO {
     public boolean inserir(Object o);
-    public boolean atualizar(Object oldObject, Object newObject);
+    public boolean atualizar(Object newObject, int id);
     public boolean excluir(Object o);
     public Object buscar(Object o);
     public ArrayList<Object> listar();
