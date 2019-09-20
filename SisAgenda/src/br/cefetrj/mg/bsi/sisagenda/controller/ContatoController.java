@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.cefetrj.mg.bsi.agenda.controller;
+package br.cefetrj.mg.bsi.sisagenda.controller;
 
-import br.cefetrj.mg.bsi.agenda.config.Settings;
-import br.cefetrj.mg.bsi.agenda.dao.ContatoDAO;
-import br.cefetrj.mg.bsi.agenda.model.Cliente;
-import br.cefetrj.mg.bsi.agenda.model.Contato;
-import br.cefetrj.mg.bsi.agenda.model.Fornecedor;
-import br.cefetrj.mg.bsi.agenda.model.TableModel;
-import br.cefetrj.mg.bsi.agenda.view.FormContato;
+import br.cefetrj.mg.bsi.sisagenda.config.Settings;
+import br.cefetrj.mg.bsi.sisagenda.dao.ContatoDAO;
+import br.cefetrj.mg.bsi.sisagenda.model.Cliente;
+import br.cefetrj.mg.bsi.sisagenda.model.Contato;
+import br.cefetrj.mg.bsi.sisagenda.model.Fornecedor;
+import br.cefetrj.mg.bsi.sisagenda.model.TableModel;
+import br.cefetrj.mg.bsi.sisagenda.view.FormContato;
 import br.cefetrj.mg.bsi.utils.Utils;
 import java.text.ParseException;
 import java.util.ArrayList;

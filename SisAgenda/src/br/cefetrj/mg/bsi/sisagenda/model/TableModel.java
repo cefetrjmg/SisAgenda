@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.cefetrj.mg.bsi.agenda.model;
+package br.cefetrj.mg.bsi.sisagenda.model;
 
-import br.cefetrj.mg.bsi.agenda.dao.ContatoDAO;
+import br.cefetrj.mg.bsi.sisagenda.dao.ContatoDAO;
 import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
 

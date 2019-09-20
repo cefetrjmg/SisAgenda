@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.cefetrj.mg.bsi.agenda.dao;
+package br.cefetrj.mg.bsi.sisagenda.dao;
 
-import br.cefetrj.mg.bsi.agenda.config.Settings;
-import br.cefetrj.mg.bsi.agenda.model.Cliente;
-import br.cefetrj.mg.bsi.agenda.model.Contato;
-import br.cefetrj.mg.bsi.agenda.model.Fornecedor;
+import br.cefetrj.mg.bsi.sisagenda.config.Settings;
+import br.cefetrj.mg.bsi.sisagenda.model.Cliente;
+import br.cefetrj.mg.bsi.sisagenda.model.Contato;
+import br.cefetrj.mg.bsi.sisagenda.model.Fornecedor;
 import br.cefetrj.mg.bsi.utils.Utils;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -31,7 +31,7 @@ public class ContatoDAO implements DAO {
     private Contato c = null;
     private static final ArrayList<Contato> CONTATOS = new ArrayList<>();
     private String tipoContato = "";
-    private static int id = 1;
+    private static int id = 0;
 
     public String getTipoContato(Contato c) {
         if (c instanceof Cliente) {
@@ -49,8 +49,7 @@ public class ContatoDAO implements DAO {
         try {
             c = (Contato) o;
             if (c.isAUTO_INCREMENT()) {
-                c.setId(id);
-
+                c.setId(++id);
                 if (CONTATOS.add(c)) {
                     Collections.sort(CONTATOS);
                     if (gravarArquivo()) {
@@ -58,7 +57,7 @@ public class ContatoDAO implements DAO {
                         //Seta true para que possa que se informa que o sistema está ok.
                         Settings.status = true;
                         Settings.msg = getTipoContato(c) + " inserido com sucesso.";
-                        id++;
+
                     }
 
                 } else {
@@ -243,7 +242,8 @@ public class ContatoDAO implements DAO {
                         f.setIndiceQuali(Integer.parseInt(linha[7]));
                         contato = f;
                     }
-                    contato.setId(Integer.parseInt(linha[0]));
+                    id = Integer.parseInt(linha[0]);
+                    contato.setId(id);
                     contato.setNome(linha[2]);
                     contato.setTel(linha[3]);
                     contato.setEmail(linha[4]);

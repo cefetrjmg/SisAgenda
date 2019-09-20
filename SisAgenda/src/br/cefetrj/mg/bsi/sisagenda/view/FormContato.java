@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.cefetrj.mg.bsi.agenda.view;
+package br.cefetrj.mg.bsi.sisagenda.view;
 
-import br.cefetrj.mg.bsi.agenda.config.Settings;
-import br.cefetrj.mg.bsi.agenda.controller.ContatoController;
-import br.cefetrj.mg.bsi.agenda.model.Fidelidade;
+import br.cefetrj.mg.bsi.sisagenda.config.Settings;
+import br.cefetrj.mg.bsi.sisagenda.controller.ContatoController;
+import br.cefetrj.mg.bsi.sisagenda.model.Fidelidade;
 import br.cefetrj.mg.bsi.utils.Utils;
 import java.awt.Event;
 import javax.swing.JButton;
@@ -268,7 +268,6 @@ public class FormContato extends javax.swing.JFrame {
         jTblContatos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(800, 500));
         setMinimumSize(new java.awt.Dimension(800, 500));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
