@@ -18,13 +18,14 @@ public class Settings {
     //Variável define se o sistema gerou um erro ou não, quando está falso o sistema gerou algum errou
     public static boolean status;
     public static final String MSG_DELETE="Deseja realamente excluir?";
-    public static  String NOME_ARQUIVO="contatos";
-    public static  String EXTENSAO_ARQUIVO=".txt";
+    public static  String NOME_ARQUIVO="";
+    public static  String EXTENSAO_ARQUIVO="";
 
     /**
      *
      */
-    public static final File ARQUIVO =new File(NOME_ARQUIVO.concat(EXTENSAO_ARQUIVO));
+    
+    
     
     
  }

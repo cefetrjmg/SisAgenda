@@ -6,6 +6,7 @@
 package br.cefetrj.mg.bsi.sisagenda.view;
 
 import br.cefetrj.mg.bsi.sisagenda.config.Settings;
+import br.cefetrj.mg.bsi.sisagenda.controller.BookController;
 import br.cefetrj.mg.bsi.sisagenda.controller.ContatoController;
 import br.cefetrj.mg.bsi.sisagenda.model.Fidelidade;
 import br.cefetrj.mg.bsi.utils.Utils;
@@ -29,13 +30,17 @@ public class FormContato extends javax.swing.JFrame {
     /**
      * Creates new form FormContato
      */
-    ContatoController controller;
+    private ContatoController controller;
+    private BookController ctlBook;
 
     public FormContato() {
         initComponents();
         jTxtId.setVisible(false);
         jLblId.setVisible(false);
+        jLblIdBook.setVisible(false);
+        jTxtIdBook.setVisible(false);
         controller = new ContatoController(this);
+        ctlBook = new BookController(this);
         isCategoriaGeral();
         carregarTiposDeFidelidade();
         controller.listar();
@@ -139,12 +144,12 @@ public class FormContato extends javax.swing.JFrame {
         return jTxtId;
     }
 
-    public JTable getjTblContatos() {
-        return jTblContatos;
+    public JTable getjTblList() {
+        return jTblList;
     }
 
-    public void setjTblContatos(JTable jTblContatos) {
-        this.jTblContatos = jTblContatos;
+    public void setjTblList(JTable jTblList) {
+        this.jTblList = jTblList;
     }
 
     public JTextField getjTxtPesquisar() {
@@ -153,6 +158,34 @@ public class FormContato extends javax.swing.JFrame {
 
     public JTabbedPane getjTpnContato() {
         return jTpnContato;
+    }
+
+    public JTextField getjTxtIdBook() {
+        return jTxtIdBook;
+    }
+
+    public JTextField getjTxtIdPub() {
+        return jTxtIdPub;
+    }
+
+    public JTextField getjTxtIsbn() {
+        return jTxtIsbn;
+    }
+
+    public JTextField getjTxtPrice() {
+        return jTxtPrice;
+    }
+
+    public JTextField getjTxtTitle() {
+        return jTxtTitle;
+    }
+
+    public JTextField getjTxtUrl() {
+        return jTxtUrl;
+    }
+
+    public JButton getjBtnCadAtualizarBook() {
+        return jBtnCadAtualizarBook;
     }
 
     public void isCategoriaGeral() {
@@ -200,7 +233,13 @@ public class FormContato extends javax.swing.JFrame {
             jTxtEnd,
             jTxtNome,
             jTxtTel,
-            jTxtDtUltimaCompra
+            jTxtDtUltimaCompra,
+            jTxtIdBook,
+            jTxtIdPub,
+            jTxtIsbn,
+            jTxtPrice,
+            jTxtTitle,
+            jTxtUrl
         };
         JComboBox cbo[] = {
             jCboClasFidelidade,
@@ -217,6 +256,7 @@ public class FormContato extends javax.swing.JFrame {
         jTxtNome.requestFocus();
         jBtnCadAtualizar.setText("Cadastrar");
         isCategoriaGeral();
+
     }
 
     private void carregarTiposDeFidelidade() {
@@ -236,6 +276,7 @@ public class FormContato extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jTpnContato = new javax.swing.JTabbedPane();
         jPnlCadContato = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -261,11 +302,29 @@ public class FormContato extends javax.swing.JFrame {
         jBtnBuscar = new javax.swing.JButton();
         jLblId = new javax.swing.JLabel();
         jTxtId = new javax.swing.JTextField();
+        jPnlCadBook = new javax.swing.JPanel();
+        jLblIdBook = new javax.swing.JLabel();
+        jTxtIdBook = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jTxtIsbn = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        jTxtTitle = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        jTxtUrl = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        jTxtIdPub = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        jTxtPrice = new javax.swing.JTextField();
+        jBtnCadAtualizarBook = new javax.swing.JButton();
+        jBtnExlcuirBook = new javax.swing.JButton();
+        jBtnFindIsbn = new javax.swing.JButton();
         jPnlListagem = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jTxtPesquisar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTblContatos = new javax.swing.JTable();
+        jTblList = new javax.swing.JTable();
+        jRdbBook = new javax.swing.JRadioButton();
+        jRdbContato = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(800, 500));
@@ -368,6 +427,58 @@ public class FormContato extends javax.swing.JFrame {
 
         jTpnContato.addTab("Cadastro", jPnlCadContato);
 
+        jPnlCadBook.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLblIdBook.setText("ID");
+        jPnlCadBook.add(jLblIdBook, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
+        jPnlCadBook.add(jTxtIdBook, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 80, 30));
+
+        jLabel9.setText("ISBN");
+        jPnlCadBook.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, -1, -1));
+        jPnlCadBook.add(jTxtIsbn, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 40, 120, 30));
+
+        jLabel10.setText("Título");
+        jPnlCadBook.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 20, -1, -1));
+        jPnlCadBook.add(jTxtTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 40, 390, 30));
+
+        jLabel11.setText("URL");
+        jPnlCadBook.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, -1, -1));
+        jPnlCadBook.add(jTxtUrl, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 300, 30));
+
+        jLabel12.setText("ID da Publicação");
+        jPnlCadBook.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 100, -1, -1));
+        jPnlCadBook.add(jTxtIdPub, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 120, 110, 30));
+
+        jLabel13.setText("Valor");
+        jPnlCadBook.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 100, -1, -1));
+        jPnlCadBook.add(jTxtPrice, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 120, 220, 30));
+
+        jBtnCadAtualizarBook.setText("Cadastrar");
+        jBtnCadAtualizarBook.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnCadAtualizarBookActionPerformed(evt);
+            }
+        });
+        jPnlCadBook.add(jBtnCadAtualizarBook, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 750, 40));
+
+        jBtnExlcuirBook.setText("Excluir");
+        jBtnExlcuirBook.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnExlcuirBookActionPerformed(evt);
+            }
+        });
+        jPnlCadBook.add(jBtnExlcuirBook, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 325, 750, 40));
+
+        jBtnFindIsbn.setText("Buscar");
+        jBtnFindIsbn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnFindIsbnActionPerformed(evt);
+            }
+        });
+        jPnlCadBook.add(jBtnFindIsbn, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 40, -1, 30));
+
+        jTpnContato.addTab("Livros", jPnlCadBook);
+
         jPnlListagem.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel7.setText("Pesquisar");
@@ -380,7 +491,7 @@ public class FormContato extends javax.swing.JFrame {
         });
         jPnlListagem.add(jTxtPesquisar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 770, 30));
 
-        jTblContatos.setModel(new javax.swing.table.DefaultTableModel(
+        jTblList.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -391,19 +502,37 @@ public class FormContato extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jTblContatos.addMouseListener(new java.awt.event.MouseAdapter() {
+        jTblList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTblContatosMouseClicked(evt);
+                jTblListMouseClicked(evt);
             }
         });
-        jTblContatos.addKeyListener(new java.awt.event.KeyAdapter() {
+        jTblList.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTblContatosKeyPressed(evt);
+                jTblListKeyPressed(evt);
             }
         });
-        jScrollPane1.setViewportView(jTblContatos);
+        jScrollPane1.setViewportView(jTblList);
 
-        jPnlListagem.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 770, 360));
+        jPnlListagem.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 770, 300));
+
+        buttonGroup1.add(jRdbBook);
+        jRdbBook.setText("Livro");
+        jRdbBook.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRdbBookActionPerformed(evt);
+            }
+        });
+        jPnlListagem.add(jRdbBook, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 80, -1, -1));
+
+        buttonGroup1.add(jRdbContato);
+        jRdbContato.setText("Contato");
+        jRdbContato.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRdbContatoActionPerformed(evt);
+            }
+        });
+        jPnlListagem.add(jRdbContato, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 80, -1, -1));
 
         jTpnContato.addTab("Listagem", jPnlListagem);
 
@@ -418,6 +547,7 @@ public class FormContato extends javax.swing.JFrame {
         if (jBtnCadAtualizar.getText().equalsIgnoreCase("cadastrar")) {
             if (controller.inserir()) {
                 controller.listar();
+                jTpnContato.setSelectedIndex(2);
                 limpar();
 
             }
@@ -425,6 +555,7 @@ public class FormContato extends javax.swing.JFrame {
         } else {
             if (controller.atualizar()) {
                 controller.listar();
+                jTpnContato.setSelectedIndex(2);
                 limpar();
             }
         }
@@ -462,37 +593,110 @@ public class FormContato extends javax.swing.JFrame {
 
     private void jBtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExcluirActionPerformed
         // TODO add your handling code here:
-        int resp =Utils.confirm(Settings.MSG_DELETE, Settings.TITLE);
+        int resp = Utils.confirm(Settings.MSG_DELETE, Settings.TITLE);
         if (resp == JOptionPane.YES_OPTION) {
             controller.excluir();
             limpar();
-        }
-        else if(resp != JOptionPane.NO_OPTION)
+            jTpnContato.setSelectedIndex(2);
+        } else if (resp != JOptionPane.NO_OPTION) {
             Utils.print(Settings.msg, Settings.TITLE, Settings.status);
+        }
     }//GEN-LAST:event_jBtnExcluirActionPerformed
 
     private void jTxtPesquisarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtPesquisarKeyReleased
         // TODO add your handling code here:
-        controller.getContatosByNomeOrEmail();
+        if (jRdbContato.isSelected()) {
+            controller.getContatosByNomeOrEmail();
+        }
+        if (jRdbBook.isSelected()) {
+            ctlBook.getBookByIsbn(jTxtPesquisar.getText());
+        }
     }//GEN-LAST:event_jTxtPesquisarKeyReleased
 
-    private void jTblContatosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTblContatosMouseClicked
+    private void jTblListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTblListMouseClicked
         // TODO add your handling code here:
         if (evt.getClickCount() == 2) {
-            controller.buscarNaBarraDePesquisa(jTblContatos.getSelectedRow());
+            if (jRdbContato.isSelected()) {
+                controller.buscarNaBarraDePesquisa(jTblList.getSelectedRow());
+            }
+            if (jRdbBook.isSelected()) {
+                ctlBook.findIsbn(jTblList.getSelectedRow());
 
+                jTpnContato.setSelectedIndex(1);
+            }
         }
 
-    }//GEN-LAST:event_jTblContatosMouseClicked
+    }//GEN-LAST:event_jTblListMouseClicked
 
-    private void jTblContatosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTblContatosKeyPressed
+    private void jTblListKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTblListKeyPressed
         // TODO add your handling code here:
-        if(evt.getKeyCode()==Event.DELETE){
-            jTpnContato.setSelectedIndex(0);
-            controller.buscarNaBarraDePesquisa(jTblContatos.getSelectedRow());
-            jBtnExcluirActionPerformed(null);
+        if (evt.getKeyCode() == Event.DELETE) {
+            if (jRdbBook.isSelected()) {
+                jTpnContato.setSelectedIndex(1);
+                ctlBook.findIsbn(jTblList.getSelectedRow());
+                jBtnExlcuirBookActionPerformed(null);
+            }
+            if (jRdbContato.isSelected()) {
+
+                jTpnContato.setSelectedIndex(0);
+                controller.buscarNaBarraDePesquisa(jTblList.getSelectedRow());
+                jBtnExcluirActionPerformed(null);
+            }
         }
-    }//GEN-LAST:event_jTblContatosKeyPressed
+    }//GEN-LAST:event_jTblListKeyPressed
+
+    private void jBtnCadAtualizarBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCadAtualizarBookActionPerformed
+        // TODO add your handling code here:
+        if (jBtnCadAtualizarBook.getText().equalsIgnoreCase("cadastrar")) {
+            if (ctlBook.inserir()) {
+                ctlBook.listar();
+                jTpnContato.setSelectedIndex(2);
+                limpar();
+            }
+        } else {
+            if (ctlBook.atualizar()) {
+                ctlBook.listar();
+                jTpnContato.setSelectedIndex(2);
+                limpar();
+
+            }
+        }
+        Utils.print(Settings.msg, Settings.TITLE, Settings.status);
+
+    }//GEN-LAST:event_jBtnCadAtualizarBookActionPerformed
+
+    private void jBtnFindIsbnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnFindIsbnActionPerformed
+        // TODO add your handling code here:
+        ctlBook.buscar();
+        if (!Settings.status) {
+            Utils.print(Settings.msg, Settings.TITLE, Settings.status);
+        }
+    }//GEN-LAST:event_jBtnFindIsbnActionPerformed
+
+    private void jRdbBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRdbBookActionPerformed
+        // TODO add your handling code here:
+        jTxtPesquisar.setText("");
+        ctlBook.getBookByIsbn("");
+
+    }//GEN-LAST:event_jRdbBookActionPerformed
+
+    private void jRdbContatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRdbContatoActionPerformed
+        // TODO add your handling code here:
+        jTxtPesquisar.setText("");
+        controller.getContatosByNomeOrEmail();
+    }//GEN-LAST:event_jRdbContatoActionPerformed
+
+    private void jBtnExlcuirBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExlcuirBookActionPerformed
+        // TODO add your handling code here:
+        int resp = Utils.confirm(Settings.MSG_DELETE, Settings.TITLE);
+        if (resp == JOptionPane.YES_OPTION) {
+            ctlBook.excluir();
+            limpar();
+            jTpnContato.setSelectedIndex(2);
+            Utils.print(Settings.msg, Settings.TITLE, Settings.status);
+        } 
+        
+    }//GEN-LAST:event_jBtnExlcuirBookActionPerformed
 
     /**
      * @param args the command line arguments
@@ -538,35 +742,54 @@ public class FormContato extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jBtnBuscar;
     private javax.swing.JButton jBtnCadAtualizar;
+    private javax.swing.JButton jBtnCadAtualizarBook;
     private javax.swing.JButton jBtnExcluir;
+    private javax.swing.JButton jBtnExlcuirBook;
+    private javax.swing.JButton jBtnFindIsbn;
     private javax.swing.JComboBox<String> jCboClasFidelidade;
     private javax.swing.JComboBox<String> jCboTipo;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLblClasFidelidade;
     private javax.swing.JLabel jLblId;
+    private javax.swing.JLabel jLblIdBook;
     private javax.swing.JLabel jLblIndice;
     private javax.swing.JLabel jLblUltimaCompra;
+    private javax.swing.JPanel jPnlCadBook;
     private javax.swing.JPanel jPnlCadContato;
     private javax.swing.JPanel jPnlListagem;
+    private javax.swing.JRadioButton jRdbBook;
+    private javax.swing.JRadioButton jRdbContato;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner jSpnIndice;
-    private javax.swing.JTable jTblContatos;
+    private javax.swing.JTable jTblList;
     private javax.swing.JTabbedPane jTpnContato;
     private javax.swing.JFormattedTextField jTxtDataNasc;
     private javax.swing.JFormattedTextField jTxtDtUltimaCompra;
     private javax.swing.JTextField jTxtEmail;
     private javax.swing.JTextField jTxtEnd;
     private javax.swing.JTextField jTxtId;
+    private javax.swing.JTextField jTxtIdBook;
+    private javax.swing.JTextField jTxtIdPub;
+    private javax.swing.JTextField jTxtIsbn;
     private javax.swing.JTextField jTxtNome;
     private javax.swing.JTextField jTxtPesquisar;
+    private javax.swing.JTextField jTxtPrice;
     private javax.swing.JFormattedTextField jTxtTel;
+    private javax.swing.JTextField jTxtTitle;
+    private javax.swing.JTextField jTxtUrl;
     // End of variables declaration//GEN-END:variables
 }

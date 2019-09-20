@@ -16,6 +16,6 @@ public interface DAO {
     public boolean atualizar(Object newObject, int id);
     public boolean excluir(Object o);
     public Object buscar(Object o);
-    public ArrayList<Object> listar();
+    public ArrayList<?> listar();
     
 }

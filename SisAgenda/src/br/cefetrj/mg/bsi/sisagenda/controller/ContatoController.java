@@ -61,7 +61,7 @@ public class ContatoController implements Controller {
                 case 2:
                     f = new Fornecedor();
                     f.setIndiceQuali((int) form.getjSpnIndice().getValue());
-                    
+
                     c = f;
                     break;
 
@@ -74,7 +74,7 @@ public class ContatoController implements Controller {
 
             getDao().inserir(c);
             renderizar(getDao().getContatos());
-            form.getjTpnContato().setSelectedIndex(1);
+            
         } catch (ParseException ex) {
             Settings.status = false;
             Settings.msg = ex.getMessage();
@@ -125,7 +125,7 @@ public class ContatoController implements Controller {
             c = new Contato();
             c.setEmail(form.getjTxtEmail().getText());
             getDao().excluir(c);
-            form.getjTpnContato().setSelectedIndex(1);
+            
         } else {
             Settings.msg = "Por favor, Preencha pelo o menos o email para realizar a exclusão.";
             Settings.status = false;
@@ -188,14 +188,20 @@ public class ContatoController implements Controller {
         renderizar(getDao().getContatosByNomeOrEmail(c));
 
     }
-    private boolean carregarArquivo(){
+
+    private boolean carregarArquivo() {
         return getDao().carregarArquivo();
     }
 
     private void renderizar(ArrayList<Contato> contatos) {
-        
-        model = new TableModel(getDao(), contatos);
-        form.getjTblContatos().setModel(model);
+        String colunas[] = {
+            "ID",
+            "E-Mail",
+            "NOME",
+            "Tipo"
+        };
+        model = new TableModel(getDao(), contatos,colunas);
+        form.getjTblList().setModel(model);
     }
 
 }

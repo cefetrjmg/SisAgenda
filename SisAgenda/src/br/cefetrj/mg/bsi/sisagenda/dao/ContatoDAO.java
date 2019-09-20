@@ -6,12 +6,15 @@
 package br.cefetrj.mg.bsi.sisagenda.dao;
 
 import br.cefetrj.mg.bsi.sisagenda.config.Settings;
+import static br.cefetrj.mg.bsi.sisagenda.config.Settings.EXTENSAO_ARQUIVO;
+import static br.cefetrj.mg.bsi.sisagenda.config.Settings.NOME_ARQUIVO;
 import br.cefetrj.mg.bsi.sisagenda.model.Cliente;
 import br.cefetrj.mg.bsi.sisagenda.model.Contato;
 import br.cefetrj.mg.bsi.sisagenda.model.Fornecedor;
 import br.cefetrj.mg.bsi.utils.Utils;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -32,7 +35,12 @@ public class ContatoDAO implements DAO {
     private static final ArrayList<Contato> CONTATOS = new ArrayList<>();
     private String tipoContato = "";
     private static int id = 0;
-
+    private File arquivo=null;
+    public ContatoDAO(){
+        Settings.NOME_ARQUIVO="contatos";
+        Settings.EXTENSAO_ARQUIVO=".txt";
+        arquivo=new File(NOME_ARQUIVO.concat(EXTENSAO_ARQUIVO));
+    }
     public String getTipoContato(Contato c) {
         if (c instanceof Cliente) {
             tipoContato = "Cliente";
@@ -150,8 +158,8 @@ public class ContatoDAO implements DAO {
     }
 
     @Override
-    public ArrayList<Object> listar() {
-        return null;
+    public ArrayList<?> listar() {
+        return CONTATOS;
     }
 
     public ArrayList<Contato> getContatos() {
@@ -174,14 +182,14 @@ public class ContatoDAO implements DAO {
     private boolean gravarArquivo() {
         BufferedWriter bw = null;
         try {
-            if (!Settings.ARQUIVO.exists()) {
+            if (!arquivo.exists()) {
                 criarArquivo();
             } else {
-                Settings.ARQUIVO.delete();
+                arquivo.delete();
                 criarArquivo();
             }
 
-            bw = new BufferedWriter(new FileWriter(Settings.ARQUIVO));
+            bw = new BufferedWriter(new FileWriter(arquivo));
             for (Contato contato : CONTATOS) {
                 bw.write(contato.getId() + ";");
                 String tipo = getTipoContato(contato);
@@ -215,7 +223,7 @@ public class ContatoDAO implements DAO {
 
     private boolean criarArquivo() {
         try {
-            return Settings.ARQUIVO.createNewFile();
+            return arquivo.createNewFile();
         } catch (IOException ex) {
             Settings.msg = "Erro ao criar arquivo:" + ex.getMessage();
             return Settings.status = false;
@@ -225,8 +233,8 @@ public class ContatoDAO implements DAO {
     public boolean carregarArquivo() {
         BufferedReader bf = null;
         try {
-            if (Settings.ARQUIVO.exists()) {
-                bf = new BufferedReader(new FileReader(Settings.ARQUIVO));
+            if (arquivo.exists()) {
+                bf = new BufferedReader(new FileReader(arquivo));
                 while (bf.ready()) {
                     Contato contato = new Contato();
                     String linha[] = bf.readLine().split(";");
@@ -253,6 +261,8 @@ public class ContatoDAO implements DAO {
                 }
 
             }
+            bf.close();
+            
 
         } catch (FileNotFoundException ex) {
             Logger.getLogger(ContatoDAO.class.getName()).log(Level.SEVERE, null, ex);
